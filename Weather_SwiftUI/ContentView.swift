@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [.blue, .white]), startPoint: .topLeading, endPoint: .bottomTrailing)
+            LinearGradient(gradient: Gradient(colors: [.blue, Color("lightBlue")]), startPoint: .topLeading, endPoint: .bottomTrailing)
                 .edgesIgnoringSafeArea(.all)
             VStack {
                 Text("Cupertino, CA")
@@ -29,6 +29,25 @@ struct ContentView: View {
                         .font(.system(size: 70, weight: .medium))
                         .foregroundColor(.white)
                 }
+                .padding(.bottom, 60)
+                    
+                    HStack(spacing: 20) {
+                        WeatherDayView(dayOfWeak: "TUE",
+                                       imageName: "cloud.sun.fill",
+                                       temperature: 76)
+                        WeatherDayView(dayOfWeak: "WED",
+                                       imageName: "cloud.fog.fill",
+                                       temperature: 65)
+                        WeatherDayView(dayOfWeak: "THU",
+                                       imageName: "sun.max.fill",
+                                       temperature: 80)
+                        WeatherDayView(dayOfWeak: "FRI",
+                                       imageName: "wind.snow",
+                                       temperature: 54)
+                        WeatherDayView(dayOfWeak: "SAT",
+                                       imageName: "sunset.fill",
+                                       temperature: 67)
+                }
                 Spacer()
             }
         }
@@ -38,5 +57,31 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+    }
+}
+
+struct WeatherDayView: View {
+    
+    var dayOfWeak: String
+    var imageName: String
+    var temperature: Int
+    
+    
+    var body: some View {
+        VStack {
+            Text(dayOfWeak)
+                .font(.system(size: 16,weight: .medium))
+                .foregroundColor(.white)
+            
+            Image(systemName: imageName)
+                .renderingMode(.original)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 40, height: 40)
+            
+            Text("\(temperature)°")
+                .font(.system(size: 28, weight: .medium))
+                .foregroundColor(.white)
+        }
     }
 }
