@@ -21,22 +21,8 @@ struct ContentView: View {
                 MainWeatherStatusView(imageName: isNight ? "moon.stars.fill" : "cloud.sun.fill",
                                       temperature: 76)
                     
-                    HStack(spacing: 20) {
-                        WeatherDayView(dayOfWeak: "TUE",
-                                       imageName: "cloud.sun.fill",
-                                       temperature: 76)
-                        WeatherDayView(dayOfWeak: "WED",
-                                       imageName: "cloud.fog.fill",
-                                       temperature: 65)
-                        WeatherDayView(dayOfWeak: "THU",
-                                       imageName: "sun.max.fill",
-                                       temperature: 80)
-                        WeatherDayView(dayOfWeak: "FRI",
-                                       imageName: "wind.snow",
-                                       temperature: 54)
-                        WeatherDayView(dayOfWeak: "SAT",
-                                       imageName: "sunset.fill",
-                                       temperature: 67)
+                    HStack() {
+                        WeatherDayView()
                 }
                 Spacer()
                 
@@ -62,25 +48,29 @@ struct ContentView_Previews: PreviewProvider {
 
 struct WeatherDayView: View {
     
-    var dayOfWeak: String
-    var imageName: String
-    var temperature: Int
+    var dayOfWeak: [String] = ["TUE", "WED", "THU", "FRI", "SAT"]
+    var imageName: [String] = ["cloud.sun.fill", "cloud.fog.fill", "sun.max.fill", "wind.snow", "sunset.fill"]
+    var temperature: [Int] = [76, 65, 80, 54, 67]
     
     var body: some View {
-        VStack {
-            Text(dayOfWeak)
-                .font(.system(size: 16,weight: .medium))
-                .foregroundColor(.white)
-            
-            Image(systemName: imageName)
-                .renderingMode(.original)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 40, height: 40)
-            
-            Text("\(temperature)°")
-                .font(.system(size: 28, weight: .medium))
-                .foregroundColor(.white)
+        HStack(spacing: 20) {
+            ForEach(0..<dayOfWeak.count, id: \.self) { index in
+                VStack(spacing: 14) {
+                    Text(dayOfWeak[index])
+                        .font(.system(size: 18,weight: .medium))
+                        .foregroundColor(.white)
+                    
+                    Image(systemName: imageName[index])
+                        .renderingMode(.original)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 50, height: 50)
+                    
+                    Text("\(temperature[index])°")
+                        .font(.system(size: 30, weight: .medium))
+                        .foregroundColor(.white)
+                }
+            }
         }
     }
 }
